@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lana Gazawi — Computer Science Student</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --border: #1e1e2e;
+    --accent: #7c6af7;
+    --accent2: #4ecca3;
+    --text: #e8e8f0;
+    --muted: #6b6b8a;
+    --tag-bg: #1a1a2e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.9rem; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(124,106,247,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -100px; left: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(78,204,163,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { max-width: 800px; position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent2);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero-name {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+  .hero-name span { color: var(--accent); }
+  .hero-title {
+    font-size: 1.25rem;
+    color: var(--muted);
+    font-weight: 400;
+    margin-bottom: 2rem;
+    max-width: 520px;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 6px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem; font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer; border: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #6a58e0; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 5rem 4rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+  }
+
+  /* ABOUT */
+  .about { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; max-width: 1100px; }
+  .about-text { color: var(--muted); font-size: 1.05rem; line-height: 1.8; }
+  .about-text p + p { margin-top: 1rem; }
+  .info-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .info-list li {
+    display: flex; justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+  .info-list li span:first-child { color: var(--muted); }
+  .info-list li span:last-child { color: var(--text); font-weight: 500; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; max-width: 1100px; }
+  .skill-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.75rem;
+    transition: border-color 0.2s;
+  }
+  .skill-card:hover { border-color: var(--accent); }
+  .skill-card h3 { font-size: 0.8rem; font-family: 'Space Mono', monospace; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag {
+    background: var(--tag-bg);
+    color: var(--text);
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    border: 1px solid var(--border);
+  }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; max-width: 1100px; }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2rem;
+    display: flex; flex-direction: column; gap: 1rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .project-header { display: flex; justify-content: space-between; align-items: flex-start; }
+  .project-icon {
+    width: 42px; height: 42px;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem;
+  }
+  .project-lang {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    background: rgba(124,106,247,0.1);
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    border: 1px solid rgba(124,106,247,0.2);
+  }
+  .project-card h3 { font-size: 1.1rem; font-weight: 600; }
+  .project-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; flex: 1; }
+  .project-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .project-bullets li {
+    font-size: 0.85rem; color: var(--muted);
+    padding-left: 1rem; position: relative;
+  }
+  .project-bullets li::before {
+    content: '→'; position: absolute; left: 0;
+    color: var(--accent2); font-size: 0.75rem;
+  }
+
+  /* CONTACT */
+  .contact { background: var(--surface); border-top: 1px solid var(--border); }
+  .contact-inner { max-width: 600px; text-align: center; margin: 0 auto; }
+  .contact-inner .section-label, .contact-inner .section-title { text-align: center; }
+  .contact-inner p { color: var(--muted); margin-bottom: 2.5rem; font-size: 1.05rem; }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text); text-decoration: none;
+    font-size: 0.9rem; font-weight: 500;
+    transition: all 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--muted); font-size: 0.85rem;
+  }
+  footer span { font-family: 'Space Mono', monospace; }
+
+  /* DIVIDER */
+  .divider { width: 40px; height: 2px; background: var(--accent); margin-bottom: 2rem; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero, section { padding: 5rem 1.5rem 3rem; }
+    .hero { padding-top: 7rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">LG.dev</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <p class="hero-eyebrow">// Available for internship</p>
+    <h1 class="hero-name">Lana<br><span>Gazawi</span></h1>
+    <p class="hero-title">Computer Science student building real things with Python, Java & SQL — passionate about software, networking, and cybersecurity.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="mailto:lanajehad61@gmail.com" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-label">// 01 — About</div>
+  <h2 class="section-title">Who I Am</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a final-year Computer Science student at the World Islamic Sciences and Education University (WISE) in Amman, Jordan, with a GPA of 3.3/4.0.</p>
+      <p>I build software that solves real problems — from multi-client chat servers to database-driven systems. My work spans backend logic, GUI development, networking, and database design.</p>
+      <p>I'm currently seeking an internship to apply my technical foundation in a real industry setting and grow fast.</p>
+    </div>
+    <ul class="info-list">
+      <li><span>University</span><span>WISE, Amman</span></li>
+      <li><span>Degree</span><span>B.Sc. Computer Science</span></li>
+      <li><span>GPA</span><span>3.3 / 4.0</span></li>
+      <li><span>Expected Graduation</span><span>2027</span></li>
+      <li><span>Location</span><span>Amman, Jordan</span></li>
+      <li><span>Status</span><span>Open to Internships ✓</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">// 02 — Skills</div>
+  <h2 class="section-title">What I Work With</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <h3>Languages</h3>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">Java</span>
+        <span class="tag">C++</span>
+        <span class="tag">SQL</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h3>Development</h3>
+      <div class="tags">
+        <span class="tag">Java Swing</span>
+        <span class="tag">NetBeans IDE</span>
+        <span class="tag">Socket Programming</span>
+        <span class="tag">Multithreading</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h3>Systems & Data</h3>
+      <div class="tags">
+        <span class="tag">Linux</span>
+        <span class="tag">Relational DB Design</span>
+        <span class="tag">SQL Normalization</span>
+        <span class="tag">Wireshark</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h3>Soft Skills</h3>
+      <div class="tags">
+        <span class="tag">Problem Solving</span>
+        <span class="tag">Works Under Pressure</span>
+        <span class="tag">Fast Learner</span>
+        <span class="tag">Arabic & English</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="section-label">// 03 — Projects</div>
+  <h2 class="section-title">Things I've Built</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon">💬</div>
+        <span class="project-lang">Java · Sockets</span>
+      </div>
+      <h3>Client-Server Chat App</h3>
+      <ul class="project-bullets">
+        <li>Multi-client chat server using Java sockets and multithreading</li>
+        <li>Real-time bi-directional communication between clients and server</li>
+        <li>Demonstrates advanced networking and concurrency concepts</li>
+      </ul>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon">📚</div>
+        <span class="project-lang">Java · GUI</span>
+      </div>
+      <h3>Library Management System</h3>
+      <ul class="project-bullets">
+        <li>Desktop GUI application using Java Swing / NetBeans</li>
+        <li>Manages books, borrowing records, and users</li>
+        <li>Interactive, user-friendly interface design</li>
+      </ul>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon">🛡️</div>
+        <span class="project-lang">Linux · Wireshark</span>
+      </div>
+      <h3>DDoS Attack Demonstration</h3>
+      <ul class="project-bullets">
+        <li>Simulated DDoS attack in a controlled lab environment</li>
+        <li>Used Wireshark for packet capture and traffic analysis</li>
+        <li>Analyzed attack patterns and network behavior</li>
+      </ul>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon">🗄️</div>
+        <span class="project-lang">SQL · DB Design</span>
+      </div>
+      <h3>Auction System Database</h3>
+      <ul class="project-bullets">
+        <li>Relational database for an online auction platform</li>
+        <li>Entities: users, items, bids, transactions</li>
+        <li>Full normalization and integrity constraints</li>
+      </ul>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon">⚡</div>
+        <span class="project-lang">Python</span>
+      </div>
+      <h3>Electricity Billing System</h3>
+      <ul class="project-bullets">
+        <li>Calculates and manages electricity bills for consumers</li>
+        <li>Input validation, billing logic, formatted output reports</li>
+      </ul>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon">🎓</div>
+        <span class="project-lang">Python</span>
+      </div>
+      <h3>Course Registration System</h3>
+      <ul class="project-bullets">
+        <li>Student course enrollment with data management logic</li>
+        <li>Handles duplicate registration and capacity constraints</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="section-label">// 04 — Contact</div>
+    <h2 class="section-title">Let's Connect</h2>
+    <p>I'm actively looking for internship opportunities. If you have a role or want to chat, reach out.</p>
+    <div class="contact-links">
+      <a href="mailto:lanajehad61@gmail.com" class="contact-link">✉️ lanajehad61@gmail.com</a>
+      <a href="tel:0781961973" class="contact-link">📞 0781961973</a>
+      <a href="https://github.com/" target="_blank" class="contact-link">🐙 GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Lana Gazawi © 2025</span>
+  <span>Built with HTML · Hosted on GitHub Pages</span>
+</footer>
+
+</body>
+</html>
